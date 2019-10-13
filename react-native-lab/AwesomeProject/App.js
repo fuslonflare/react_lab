@@ -1,43 +1,25 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native'
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import React, { Component } from 'react';
+import { View, Text, TextInput } from 'react-native';
 
-class HomeScreen extends React.Component {
+export default class PizzaTranslator extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {text: ''};
+    }
+
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Home Page</Text>
-                <Button
-                    onPress={() => this.props.navigation.navigate('Info')}
-                    title="Go to info" />
+            <View style={{padding: 10}}>
+                <TextInput
+                    style={{height: 40}}
+                    placeholder="Enter word here~"
+                    onChangeText={(text) => this.setState({text})}
+                    value={this.state.text}
+                />
+                <Text style={{padding: 10, fontSize: 42}}>
+                    {this.state.text.split(' ').map((word) => word + '😶').join('')}
+                </Text>
             </View>
         );
     }
 }
-
-class InfoScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Info Screen</Text>
-                <Button
-                    onPress={() => this.props.navigation.push('Info')}
-                    title="Go to info again..." />
-                <Button
-                    onPress={() => this.props.navigation.push('Home')}
-                    title="Back to home" />
-                <Button
-                    onPress={() => this.props.navigation.goBack()}
-                    title="Go back" />
-            </View>
-        );
-    }
-}
-
-const AppNavigator = createStackNavigator({
-    Home: HomeScreen,
-    Info: InfoScreen
-}, {initialRouteName: 'Home'});
-
-export default createAppContainer(AppNavigator);

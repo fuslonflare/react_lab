@@ -1,102 +1,52 @@
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    Button,
-    View,
-    SafeAreaView,
-    Text,
-    Alert
-} from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 16,
-        marginHorizontal: 16
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
-    title: {
-        textAlign: 'center',
-        marginVertical: 8
+    buttonContainer: {
+        margin: 20
     },
-    fixToText: {
+    alternativeLayoutButtonContainer: {
+        margin: 20,
         flexDirection: 'row',
         justifyContent: 'space-between'
-    },
-    separator: {
-        marginVertical: 8,
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth
     }
 });
 
-function Separator() {
-    return <View style={styles.separator} />;
-}
-
-export default class App extends Component {
+export default class ButtonBasics extends Component {
+    _greatFunction() {
+        alert('You tapped the button!')
+    }
     render() {
         return(
-            <SafeAreaView style={styles.container}>
-                <View>
-                    <Text style={styles.title}>
-                        The title and onPress handler are required. It is recommended to set
-                        accessibilityLabel to help make your app usable by everyone.
-                    </Text>
+            <View style={styles.container}>
+                <View style={styles.buttonContainer}>
                     <Button
-                        title="Press me"
-                        onPress={() => Alert.alert(
-                            'Alert Title',
-                            'Alert message',
-                            [
-                                {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                                {text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel'},
-                                {text: 'OK', onPress: () => console.log('OK pressed')}
-                            ],
-                            {cancelable: false}
-                        )}
-                    />
+                        style={styles.buttonContainer}
+                        title='Press me'
+                        onPress={this._greatFunction} />
                 </View>
-                <Separator />
-                <View>
-                    <Text style={styles.title}>
-                        Adjust the color in a way that looks standard on each platform. On
-                        iOS, the color prop controls the color of the text. On Android, the
-                        color adjusts the backgroud color of the button.
-                    </Text>
+                <View style={styles.buttonContainer}>
                     <Button
-                        title="Press me"
-                        color="#f194ff"
-                        onPress={() => Alert.alert('', 'Button with adjusted color pressed.')}
-                    />
+                        style={styles.buttonContainer}
+                        title='Press me'
+                        color='#841584'
+                        onPress={this._greatFunction} />
                 </View>
-                <Separator />
-                <View>
-                    <Text style={styles.title}>
-                        All interaction for the component are disabled.
-                    </Text>
+                <View style={styles.alternativeLayoutButtonContainer}>
                     <Button
-                        title="Press me"
-                        disabled
-                        onPress={() => Alert.alert('Cannot press this one.')}
-                    />
+                        title='This looks greatttttt!'
+                        onPress={this._greatFunction} />
+                    <Button
+                        title='OK!'
+                        color='#841584'
+                        onPress={this._greatFunction} />
                 </View>
-                <Separator />
-                <View>
-                    <Text style={styles.title}>
-                        This layout strategy lets the title define the width of the button.
-                    </Text>
-                    <View style={styles.fixToText}>
-                        <Button
-                            title="Left button"
-                            onPress={() => Alert.alert('Left button pressed.')}
-                        />
-                        <Button
-                            title="Right button"
-                            onPress={() => Alert.alert('Right button pressed.')}
-                        />
-                    </View>
-                </View>
-            </SafeAreaView>
+            </View>
         );
     }
 }

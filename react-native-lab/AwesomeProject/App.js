@@ -1,51 +1,70 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    View
+} from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
+        paddingTop: 60,
+        alignItems: 'center'
     },
-    buttonContainer: {
-        margin: 20
+    button: {
+        marginBottom: 30,
+        width: 260,
+        alignItems: 'center',
+        backgroundColor: '#2196f3'
     },
-    alternativeLayoutButtonContainer: {
-        margin: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+    buttonText: {
+        textAlign: 'center',
+        padding: 20,
+        color: 'white'
     }
 });
 
-export default class ButtonBasics extends Component {
-    _greatFunction() {
+export default class Touchables extends Component {
+    _onPressButton() {
         alert('You tapped the button!')
     }
+
+    _onLongPressButton() {
+        alert('You long-pressed the button!')
+    }
+
     render() {
         return(
             <View style={styles.container}>
-                <View style={styles.buttonContainer}>
-                    <Button
-                        style={styles.buttonContainer}
-                        title='Press me'
-                        onPress={this._greatFunction} />
-                </View>
-                <View style={styles.buttonContainer}>
-                    <Button
-                        style={styles.buttonContainer}
-                        title='Press me'
-                        color='#841584'
-                        onPress={this._greatFunction} />
-                </View>
-                <View style={styles.alternativeLayoutButtonContainer}>
-                    <Button
-                        title='This looks greatttttt!'
-                        onPress={this._greatFunction} />
-                    <Button
-                        title='OK!'
-                        color='#841584'
-                        onPress={this._greatFunction} />
-                </View>
+                <TouchableHighlight onPress={this._onPressButton} underlayColor='pink'>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Touchable Highlight</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableOpacity onPress={this._onPressButton}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableOpacity</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableNativeFeedback onPress={this._onPressButton} background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableNativeFeedback {Platform.OS !== 'android' ? '(Android only)' : ''}</Text>
+                    </View>
+                </TouchableNativeFeedback>
+                <TouchableWithoutFeedback onPress={this._onPressButton}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableHighlight onPress={this._onPressButton} onLongPress={this._onLongPressButton} underlayColor='white'>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Touchable with long press</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
         );
     }

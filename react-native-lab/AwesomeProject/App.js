@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { Appbar } from 'react-native-paper'
+import { Appbar, Button } from 'react-native-paper'
 import TypeText from './components/cards/type-text';
 import TypeImage from './components/cards/type-image';
 import TypeBoolean from './components/cards/type-boolean';
@@ -20,7 +20,7 @@ let ticketAppointmentQcItems = [
         "ticketAppointmentQcStatusId": 1,
         "itemNo": 2,
         "name": "จำนวนกล้องที่ติดตั้ง",
-        "type": 4,
+        "type": 1,
         "remark": null
     },
     {
@@ -28,7 +28,7 @@ let ticketAppointmentQcItems = [
         "ticketAppointmentQcStatusId": 1,
         "itemNo": 5,
         "name": "พื้นที่ทำงานโดยรอบ",
-        "type": 2,
+        "type": 1,
         "remark": null
     },
     {
@@ -36,7 +36,7 @@ let ticketAppointmentQcItems = [
         "ticketAppointmentQcStatusId": 1,
         "itemNo": 3,
         "name": "Sim สัญญาณดี",
-        "type": 3,
+        "type": 1,
         "remark": null
     },
     {
@@ -44,12 +44,23 @@ let ticketAppointmentQcItems = [
         "ticketAppointmentQcStatusId": 1,
         "itemNo": 4,
         "name": "เลข Sim ถูกต้อง",
-        "type": 3,
+        "type": 1,
         "remark": null
     }
 ];
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+
+        this.handleFieldChange = this.handleFieldChange.bind(this);
+    }
+
+    handleFieldChange(fieldId, value, remark) {
+        this.setState({ [fieldId]: { value: value, remark: remark } });
+    }
+
     sortByItemNo(collections) {
         return collections.sort((a, b) => a.itemNo - b.itemNo);
     }
@@ -60,16 +71,16 @@ class App extends Component {
 
     renderCard(qcItem) {
         if (qcItem.type === 1) {
-            return <TypeText itemNo={qcItem.itemNo} name={qcItem.name} />
+            return <TypeText qcItem={qcItem} onChange={this.handleFieldChange} />
         }
         else if (qcItem.type === 2) {
-            return <TypeImage itemNo={qcItem.itemNo} name={qcItem.name} />
+            return <TypeImage qcItem={qcItem} onChange={this.handleFieldChange} />
         }
         else if (qcItem.type === 3) {
-            return <TypeBoolean itemNo={qcItem.itemNo} name={qcItem.name} />
+            return <TypeBoolean qcItem={qcItem} onChange={this.handleFieldChange} />
         }
         else if (qcItem.type === 4) {
-            return <TypeInteger itemNo={qcItem.itemNo} name={qcItem.name} />
+            return <TypeInteger qcItem={qcItem} onChange={this.handleFieldChange} />
         }
     }
 
@@ -85,8 +96,10 @@ class App extends Component {
                 <View style={{ flex: 1, flexDirection: 'column', padding: 8 }}>
                     <FlatList
                         data={ticketAppointmentQcItems}
-                        renderItem={({ item }) => this.renderCard(item)} />
+                        renderItem={({ item }) => this.renderCard(item)}
+                        keyExtractor={item => item.id} />
                 </View>
+                <Button onPress={() => console.log('state', this.state)}>Save</Button>
             </View>
         );
     }

@@ -7,29 +7,42 @@ export default class TypeIntegerCard extends Component {
         super(props);
         this.onPressDecreseButton = this.onPressDecreseButton.bind(this);
         this.onPressIncreaseButton = this.onPressIncreaseButton.bind(this);
+        this.handleChangeValue = this.handleChangeValue.bind(this);
+        this.handleChangeRemark = this.handleChangeRemark.bind(this);
         this.state = {
             value: 0,
             remark: '',
             name: '',
             itemNo: 0
         }
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, null, this.state.value, null, null, this.state.remark);
     }
 
     onPressDecreseButton() {
         let newValue = this.state.value - 1;
         this.setState({ value: newValue });
+        this.handleChangeValue(newValue);
     }
 
     onPressIncreaseButton() {
         let newValue = this.state.value + 1;
         this.setState({ value: newValue });
+        this.handleChangeValue(newValue);
+    }
+
+    handleChangeValue(newValue) {
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, null, newValue, null, null, this.state.remark);
+    }
+
+    handleChangeRemark(remark) {
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, null, this.state.value, null, null, remark);
     }
 
     render() {
         return (
             <View style={{ padding: 8 }}>
                 <Card style={{ elevation: 5 }}>
-                    <Card.Title title={'#' + this.props.itemNo + ' ' + this.props.name} />
+                    <Card.Title title={'#' + this.props.qcItem.itemNo + ' ' + this.props.qcItem.name} />
                     <Card.Content>
                         <View style={{ flexDirection: 'column' }}>
                             <View style={{ flexDirection: 'row' }}>
@@ -46,7 +59,7 @@ export default class TypeIntegerCard extends Component {
                                 label='Remark'
                                 multiline={true}
                                 value={this.state.remark}
-                                onChangeText={text => this.setState({ remark: text })} />
+                                onChangeText={(text) => { this.setState({ remark: text }); this.handleChangeRemark(text); }} />
                         </View>
                     </Card.Content>
                 </Card>

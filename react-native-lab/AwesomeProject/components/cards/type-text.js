@@ -13,14 +13,15 @@ export default class TypeTextCard extends Component {
             name: '',
             itemNo: 0
         }
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, this.state.value, null, null, null, this.state.remark);
     }
 
     handleChangeValue(newValue) {
-        this.props.onChange(this.props.qcItem.id, newValue, this.state.remark);
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, newValue, null, null, null, this.state.remark);
     }
 
     handleChangeRemark(remark) {
-        this.props.onChange(this.props.qcItem.id, this.state.value, remark);
+        this.props.onChange(this.props.qcItem.id, this.props.qcItem.type, this.state.value, null, null, null, remark);
     }
 
     render() {

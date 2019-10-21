@@ -20,31 +20,31 @@ let ticketAppointmentQcItems = [
         "ticketAppointmentQcStatusId": 1,
         "itemNo": 2,
         "name": "จำนวนกล้องที่ติดตั้ง",
-        "type": 1,
-        "remark": null
-    },
-    {
-        "id": 3,
-        "ticketAppointmentQcStatusId": 1,
-        "itemNo": 5,
-        "name": "พื้นที่ทำงานโดยรอบ",
-        "type": 1,
-        "remark": null
-    },
-    {
-        "id": 4,
-        "ticketAppointmentQcStatusId": 1,
-        "itemNo": 3,
-        "name": "Sim สัญญาณดี",
-        "type": 1,
+        "type": 4,
         "remark": null
     },
     {
         "id": 5,
         "ticketAppointmentQcStatusId": 1,
+        "itemNo": 5,
+        "name": "พื้นที่ทำงานโดยรอบ",
+        "type": 2,
+        "remark": null
+    },
+    {
+        "id": 3,
+        "ticketAppointmentQcStatusId": 1,
+        "itemNo": 3,
+        "name": "Sim สัญญาณดี",
+        "type": 3,
+        "remark": null
+    },
+    {
+        "id": 4,
+        "ticketAppointmentQcStatusId": 1,
         "itemNo": 4,
         "name": "เลข Sim ถูกต้อง",
-        "type": 1,
+        "type": 3,
         "remark": null
     }
 ];
@@ -57,16 +57,21 @@ class App extends Component {
         this.handleFieldChange = this.handleFieldChange.bind(this);
     }
 
-    handleFieldChange(fieldId, value, remark) {
-        this.setState({ [fieldId]: { value: value, remark: remark } });
+    handleFieldChange(ticketAppointmentQcItemId, dataType, valueText, valueInteger, valueBoolean, valueImageUri, remark) {
+        this.setState({
+            [ticketAppointmentQcItemId]: {
+                dataType: dataType,
+                valueText: valueText,
+                valueInteger: valueInteger,
+                valueBoolean: valueBoolean,
+                valueImageUri: valueImageUri,
+                remark: remark
+            }
+        });
     }
 
     sortByItemNo(collections) {
         return collections.sort((a, b) => a.itemNo - b.itemNo);
-    }
-
-    _goBack() {
-        console.log('Go back');
     }
 
     renderCard(qcItem) {
@@ -97,7 +102,7 @@ class App extends Component {
                     <FlatList
                         data={ticketAppointmentQcItems}
                         renderItem={({ item }) => this.renderCard(item)}
-                        keyExtractor={item => item.id} />
+                        keyExtractor={item => item.id.toString()} />
                 </View>
                 <Button onPress={() => console.log('state', this.state)}>Save</Button>
             </View>
